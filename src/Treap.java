@@ -23,6 +23,7 @@ import java.util.Random;
  */
 @SuppressWarnings("all")
 public class Treap<AnyType extends Comparable<? super AnyType>> implements DataStructure<AnyType> {
+    private int rotationCounter;
     /**
      * Construct the treap.
      */
@@ -35,8 +36,9 @@ public class Treap<AnyType extends Comparable<? super AnyType>> implements DataS
 
     @Override
     public int getRotationCounter() {
+        return rotationCounter;
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getRotationCounter'");
+        //throw new UnsupportedOperationException("Unimplemented method 'getRotationCounter'");
     }
 
     /**

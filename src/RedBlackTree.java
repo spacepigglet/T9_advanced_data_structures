@@ -88,6 +88,7 @@ public class RedBlackTree<AnyType extends Comparable<? super AnyType>> implement
      * @throws UnsupportedOperationException if called.
      */
     public void remove(AnyType x) {
+
         throw new UnsupportedOperationException();
     }
 

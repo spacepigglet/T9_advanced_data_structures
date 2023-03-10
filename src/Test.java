@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
@@ -9,8 +8,8 @@ public class Test {
     private static final int[] REVERSE_NODUPLICATE_75 = { 100, 98, 96, 94, 93, 91, 89, 88, 87, 86, 85, 84, 83, 82, 80, 78, 77, 76, 75, 73, 71, 70, 69, 68, 67, 66, 64, 63, 62, 61, 59, 56, 55, 54, 53, 52, 51, 50, 49, 48, 46, 45, 44, 43, 42, 40, 39, 37, 36, 35, 33, 31, 30, 28, 27, 26, 25, 24, 21, 20, 19, 17, 16, 14, 12, 11, 10, 9, 8, 7, 6, 5, 4, 2, 1 };
 
     // Testdata for contains
-    private static final int[] TEST_WITH_DULICATES_15 = { 45, 86, 45, 40, 83, 86, 61, 93, 46, 86, 1, 20 }; // Gonna be good for splay
-    private static final int[] TEST_NO_DULICATES_15 = { 52, 66, 45, 40, 83, 8, 26, 93, 46, 86, 1, 20 };
+    private static final int[] TEST_WITH_DUPLICATES_15 = { 45, 86, 45, 40, 83, 86, 61, 93, 46, 86, 1, 20 }; // Gonna be good for splay
+    private static final int[] TEST_NO_DUPLICATES_15 = { 52, 66, 45, 40, 83, 8, 26, 93, 46, 86, 1, 20 };
 
     public static void main(String[] args) {
         RedBlackTree<Integer> rbtSorted = new RedBlackTree<>();
@@ -24,19 +23,19 @@ public class Test {
         //test insert sorted
         insert(splayTreeSorted, SORTED_NODUPLICATE_75);
 
-        System.out.println(testContains(splayTreeSorted, TEST_WITH_DULICATES_15));
-        System.out.println(testContains(splayTreeSorted, TEST_NO_DULICATES_15));
+        System.out.println(testContains(splayTreeSorted, TEST_WITH_DUPLICATES_15));
+        System.out.println(testContains(splayTreeSorted, TEST_NO_DUPLICATES_15));
 
         //test insert unsorted
         insert(splayTreeUnsorted, UNSORTED_NODUPLICATES_75);
 
-        System.out.println(testContains(splayTreeUnsorted, TEST_WITH_DULICATES_15));
-        System.out.println(testContains(splayTreeUnsorted, TEST_NO_DULICATES_15));
+        System.out.println(testContains(splayTreeUnsorted, TEST_WITH_DUPLICATES_15));
+        System.out.println(testContains(splayTreeUnsorted, TEST_NO_DUPLICATES_15));
         //test insert reverse sorted
         insert(splayTreeReverse, REVERSE_NODUPLICATE_75);
 
-        System.out.println(testContains(splayTreeReverse, TEST_WITH_DULICATES_15));
-        System.out.println(testContains(splayTreeReverse, TEST_NO_DULICATES_15));
+        System.out.println(testContains(splayTreeReverse, TEST_WITH_DUPLICATES_15));
+        System.out.println(testContains(splayTreeReverse, TEST_NO_DUPLICATES_15));
     }
 
     public static int insert(DataStructure<Integer> struct, int... ints) {
