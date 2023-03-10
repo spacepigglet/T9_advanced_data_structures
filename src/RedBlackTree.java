@@ -1,4 +1,4 @@
-public class RedBlackTree {
+
     // RedBlackTree class
 //
 // CONSTRUCTION: with no parameters
@@ -15,13 +15,13 @@ public class RedBlackTree {
 // ******************ERRORS********************************
 // Throws UnderflowException as appropriate
 
-    /**
-     * Implements a red-black tree.
-     * Note that all "matching" is based on the compareTo method.
-     * @author Mark Allen Weiss
-     */
-    public class RedBlackTree<AnyType extends Comparable<? super AnyType>>
-    {
+/**
+ * Implements a red-black tree.
+ * Note that all "matching" is based on the compareTo method.
+ * @author Mark Allen Weiss
+ */
+public class RedBlackTree<AnyType extends Comparable<? super AnyType>>
+{
         /**
          * Construct the tree.
          */
@@ -309,5 +309,5 @@ public class RedBlackTree {
                 if( !t.contains( i ) )
                     System.out.println( "Find error1!" );
         }
-    }
 }
+
