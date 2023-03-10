@@ -184,8 +184,11 @@ public class SplayTree<AnyType extends Comparable<? super AnyType>> {
 			int compareResult = x.compareTo(t.element);
 
 			if (compareResult < 0) {
-				if (x.compareTo(t.left.element) < 0)
+				if (x.compareTo(t.left.element) < 0){
 					t = rotateWithLeftChild(t);
+					rotationCounter++;
+				}
+
 				if (t.left == nullNode)
 					break;
 				// Link Right
@@ -193,8 +196,11 @@ public class SplayTree<AnyType extends Comparable<? super AnyType>> {
 				rightTreeMin = t;
 				t = t.left;
 			} else if (compareResult > 0) {
-				if (x.compareTo(t.right.element) > 0)
+				if (x.compareTo(t.right.element) > 0) {
 					t = rotateWithRightChild(t);
+					rotationCounter++;
+				}
+
 				if (t.right == nullNode)
 					break;
 				// Link Left
