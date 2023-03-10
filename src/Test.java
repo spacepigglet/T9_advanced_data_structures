@@ -6,6 +6,10 @@ public class test {
     public static void main(String[] args) {
         //test insert sorted
         insert(SORTED_NODUPLICATE_75);
+        //test insert unsorted
+        insert(UNSORTED_NODUPLICATES_75);
+        //test insert unsorted
+        insert(REVERSE_NODUPLICATE_75);
     }
 
     public static void insert(int... ints){
@@ -13,8 +17,10 @@ public class test {
         Treap treap = new Treap();
         SplayTree splayTree = new SplayTree();
 
-        for (Integer i : ints) {
+        for (int i : ints) {
             rbt.insert(i);
+            treap.insert(i);
+            splayTree.insert(i);
         }
     }
 
