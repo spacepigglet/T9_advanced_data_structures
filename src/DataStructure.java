@@ -3,5 +3,7 @@ public interface DataStructure<T> {
 
 	public int getRotationCounter();
 
+	public void resetRotationCounter();
+
 	public void insert(T i);
 }

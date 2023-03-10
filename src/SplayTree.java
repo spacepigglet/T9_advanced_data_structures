@@ -259,6 +259,11 @@ public class SplayTree<AnyType extends Comparable<? super AnyType>> implements D
 		BinaryNode<AnyType> right; // Right child
 	}
 
+	@Override
+	public void resetRotationCounter() {
+		rotationCounter = 0;
+	}
+
 	private BinaryNode<AnyType> root;
 	private BinaryNode<AnyType> nullNode;
 

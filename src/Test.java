@@ -8,41 +8,79 @@ public class Test {
     private static final int[] REVERSE_NODUPLICATE_75 = { 100, 98, 96, 94, 93, 91, 89, 88, 87, 86, 85, 84, 83, 82, 80, 78, 77, 76, 75, 73, 71, 70, 69, 68, 67, 66, 64, 63, 62, 61, 59, 56, 55, 54, 53, 52, 51, 50, 49, 48, 46, 45, 44, 43, 42, 40, 39, 37, 36, 35, 33, 31, 30, 28, 27, 26, 25, 24, 21, 20, 19, 17, 16, 14, 12, 11, 10, 9, 8, 7, 6, 5, 4, 2, 1 };
 
     // Testdata for contains
-    private static final int[] TEST_WITH_DUPLICATES_15 = { 45, 86, 45, 40, 83, 86, 61, 93, 46, 86, 1, 20 }; // Gonna be good for splay
-    private static final int[] TEST_NO_DUPLICATES_15 = { 52, 66, 45, 40, 83, 8, 26, 93, 46, 86, 1, 20 };
+    private static final int[] TEST_CONTAINS_DUPLICATES_15 = { 45, 86, 45, 40, 83, 86, 61, 93, 46, 86, 1, 20 }; // Gonna be good for splay
+    private static final int[] TEST_CONTAINS_NO_DUPLICATES_15 = { 52, 66, 45, 40, 83, 8, 26, 93, 46, 86, 1, 20 };
 
     public static void main(String[] args) {
         RedBlackTree<Integer> rbtSorted = new RedBlackTree<>();
         RedBlackTree<Integer> rbtUnsorted = new RedBlackTree<>();
         RedBlackTree<Integer> rbtReverse = new RedBlackTree<>();
-        Treap<Integer> treap = new Treap<>();
+        Treap<Integer> treapSorted = new Treap<>();
+        Treap<Integer> treapUnsorted = new Treap<>();
+        Treap<Integer> treapReverse = new Treap<>();
         SplayTree<Integer> splayTreeSorted = new SplayTree<>();
         SplayTree<Integer> splayTreeUnsorted = new SplayTree<>();
         SplayTree<Integer> splayTreeReverse = new SplayTree<>();
 
-        //test insert sorted
-        insert(splayTreeSorted, SORTED_NODUPLICATE_75);
 
-        System.out.println(testContains(splayTreeSorted, TEST_WITH_DUPLICATES_15));
-        System.out.println(testContains(splayTreeSorted, TEST_NO_DUPLICATES_15));
+        //INSERT
+        System.out.println("test insert SORTED:");
+        insertTester(SORTED_NODUPLICATE_75, splayTreeSorted,rbtSorted, treapSorted);
+        System.out.println("test insert UNSORTED:");
+        insertTester(UNSORTED_NODUPLICATES_75, splayTreeUnsorted, rbtUnsorted, treapUnsorted);
+        System.out.println("test insert REVERSE");
+        insertTester(REVERSE_NODUPLICATE_75, splayTreeReverse, rbtReverse, treapReverse);
 
-        //test insert unsorted
-        insert(splayTreeUnsorted, UNSORTED_NODUPLICATES_75);
+        //insert tests complete -> reset rotationCounter!
+        resetCounter(splayTreeSorted,rbtSorted, treapSorted, splayTreeUnsorted, rbtUnsorted, treapUnsorted, splayTreeReverse, rbtReverse, treapReverse);
 
-        System.out.println(testContains(splayTreeUnsorted, TEST_WITH_DUPLICATES_15));
-        System.out.println(testContains(splayTreeUnsorted, TEST_NO_DUPLICATES_15));
-        //test insert reverse sorted
-        insert(splayTreeReverse, REVERSE_NODUPLICATE_75);
 
-        System.out.println(testContains(splayTreeReverse, TEST_WITH_DUPLICATES_15));
-        System.out.println(testContains(splayTreeReverse, TEST_NO_DUPLICATES_15));
+        //CONTAINS
+        //test number of rotations caused by contains
+        //test contains sorted - interesting for splay tree
+        System.out.println("test number of rotations caused by contains");
+        System.out.println("sorted duplicates");
+        containsTester(TEST_CONTAINS_DUPLICATES_15, splayTreeSorted,rbtSorted, treapSorted);
+        System.out.println("sorted NO duplicates");
+        containsTester(TEST_CONTAINS_NO_DUPLICATES_15, splayTreeSorted,rbtSorted, treapSorted);
+
+        //unsorted
+        System.out.println("unsorted duplicates");
+        containsTester(TEST_CONTAINS_DUPLICATES_15, splayTreeUnsorted,rbtUnsorted, treapUnsorted);
+        System.out.println("unsorted NO duplicates");
+        containsTester(SORTED_NODUPLICATE_75, splayTreeUnsorted,rbtUnsorted, treapUnsorted);
+
+        //reverse
+        System.out.println("reverse duplicates");
+        containsTester(TEST_CONTAINS_DUPLICATES_15, splayTreeReverse,rbtReverse, treapReverse);
+        System.out.println("reverse NO duplicates");
+        containsTester(SORTED_NODUPLICATE_75, splayTreeReverse,rbtReverse, treapReverse);
+
+        //contains tests complete -> reset rotationCounter!
+        resetCounter(splayTreeSorted,rbtSorted, treapSorted, splayTreeUnsorted, rbtUnsorted, treapUnsorted, splayTreeReverse, rbtReverse, treapReverse);
+        //REMOVE
+
     }
 
+    private static void resetCounter(DataStructure<Integer>... structs){
+        for(DataStructure<Integer> struct : structs){
+            struct.resetRotationCounter();
+        }
+    }
+
+
+
+    private static void insertTester(int[] data, DataStructure<Integer>... structs){
+        for(DataStructure<Integer> struct : structs) {
+            System.out.print(struct.getClass().getName() + ": ");
+            System.out.println(insert(struct, data));
+        }
+    }
+    
     public static int insert(DataStructure<Integer> struct, int... ints) {
         for (int i : ints) {
             struct.insert(i);
         }
-
         return struct.getRotationCounter();
     }
 
@@ -50,9 +88,16 @@ public class Test {
         for (int i : testData) {
             struct.contains(i);
         }
-
         return struct.getRotationCounter();
     }
+
+    private static void containsTester(int[] data, DataStructure<Integer>... structs) {
+        for(DataStructure<Integer> struct : structs) {
+            System.out.print(struct.getClass().getName() + ": ");
+            System.out.println(testContains(struct, data));
+        }
+    }
+
 
     private static void generateData() {
         int size = 75;

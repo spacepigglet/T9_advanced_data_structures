@@ -33,8 +33,14 @@ public class RedBlackTree<AnyType extends Comparable<? super AnyType>> implement
         header.left = header.right = nullNode;
     }
 
+    @Override
     public int getRotationCounter() {
         return rotationCounter;
+    }
+
+    @Override
+    public void resetRotationCounter() {
+        rotationCounter=0;
     }
 
     /**
