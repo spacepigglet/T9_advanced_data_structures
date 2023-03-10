@@ -20,6 +20,7 @@
  */
 @SuppressWarnings("all")
 public class SplayTree<AnyType extends Comparable<? super AnyType>> {
+	private int rotationCounter;
 	/**
 	 * Construct the tree.
 	 */
@@ -27,6 +28,10 @@ public class SplayTree<AnyType extends Comparable<? super AnyType>> {
 		nullNode = new BinaryNode<AnyType>(null);
 		nullNode.left = nullNode.right = nullNode;
 		root = nullNode;
+	}
+
+	public int getRotationCounter(){
+		return rotationCounter;
 	}
 
 	private BinaryNode<AnyType> newNode = null; // Used between different inserts

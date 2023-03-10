@@ -22,6 +22,7 @@
  */
 public class RedBlackTree<AnyType extends Comparable<? super AnyType>>
 {
+    private int rotationCounter;
         /**
          * Construct the tree.
          */
@@ -32,6 +33,10 @@ public class RedBlackTree<AnyType extends Comparable<? super AnyType>>
             header      = new RedBlackNode<>( null );
             header.left = header.right = nullNode;
         }
+
+    public int getRotationCounter(){
+        return rotationCounter;
+    }
 
         /**
          * Compare item and t.element, using compareTo, with
@@ -223,6 +228,7 @@ public class RedBlackTree<AnyType extends Comparable<? super AnyType>>
          */
         private RedBlackNode<AnyType> rotate( AnyType item, RedBlackNode<AnyType> parent )
         {
+            rotationCounter++;
             if( compare( item, parent ) < 0 )
                 return parent.left = compare( item, parent.left ) < 0 ?
                         rotateWithLeftChild( parent.left )  :  // LL
@@ -309,5 +315,7 @@ public class RedBlackTree<AnyType extends Comparable<? super AnyType>>
                 if( !t.contains( i ) )
                     System.out.println( "Find error1!" );
         }
+
+
 }
 
