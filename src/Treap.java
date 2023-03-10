@@ -22,7 +22,7 @@ import java.util.Random;
  * @author Mark Allen Weiss
  */
 @SuppressWarnings("all")
-public class Treap<AnyType extends Comparable<? super AnyType>> {
+public class Treap<AnyType extends Comparable<? super AnyType>> implements DataStructure<AnyType> {
     /**
      * Construct the treap.
      */
@@ -31,6 +31,12 @@ public class Treap<AnyType extends Comparable<? super AnyType>> {
         nullNode.left = nullNode.right = nullNode;
         nullNode.priority = Integer.MAX_VALUE;
         root = nullNode;
+    }
+
+    @Override
+    public int getRotationCounter() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRotationCounter'");
     }
 
     /**

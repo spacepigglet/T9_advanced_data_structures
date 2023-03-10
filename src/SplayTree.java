@@ -19,8 +19,9 @@
  * @author Mark Allen Weiss
  */
 @SuppressWarnings("all")
-public class SplayTree<AnyType extends Comparable<? super AnyType>> {
+public class SplayTree<AnyType extends Comparable<? super AnyType>> implements DataStructure<AnyType> {
 	private int rotationCounter;
+
 	/**
 	 * Construct the tree.
 	 */
@@ -30,7 +31,7 @@ public class SplayTree<AnyType extends Comparable<? super AnyType>> {
 		root = nullNode;
 	}
 
-	public int getRotationCounter(){
+	public int getRotationCounter() {
 		return rotationCounter;
 	}
 
@@ -184,7 +185,7 @@ public class SplayTree<AnyType extends Comparable<? super AnyType>> {
 			int compareResult = x.compareTo(t.element);
 
 			if (compareResult < 0) {
-				if (x.compareTo(t.left.element) < 0){
+				if (x.compareTo(t.left.element) < 0) {
 					t = rotateWithLeftChild(t);
 					rotationCounter++;
 				}
