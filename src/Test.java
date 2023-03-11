@@ -11,7 +11,7 @@ public class Test {
 
     //Test data for mixed insert remove
 
-    private static final Integer[] TO_INSERT = {195, 150, 149, 157, 199, 141, 107, 175, 123, 161, 164, 165, 142, 139, 176, 110, 167, 155, 171, 117, 113, 168, 127, 172, 196, 158, 156, 200, 198, 115, 140, 112, 130, 104, 137, 192, 108, 133, 124, 159, 189, 184, 160, 121, 180, 179, 182, 105, 114, 188, 131, 163, 152, 154, 116, 185, 118, 146, 111, 151, 145, 181, 197, 162, 132, 186, 119, 201, 193, 183, 170, 138, 191, 106, 174 };
+    private static final Integer[] TO_INSERT = { 195, 150, 149, 157, 199, 141, 107, 175, 123, 161, 164, 165, 142, 139, 176, 110, 167, 155, 171, 117, 113, 168, 127, 172, 196, 158, 156, 200, 198, 115, 140, 112, 130, 104, 137, 192, 108, 133, 124, 159, 189, 184, 160, 121, 180, 179, 182, 105, 114, 188, 131, 163, 152, 154, 116, 185, 118, 146, 111, 151, 145, 181, 197, 162, 132, 186, 119, 201, 193, 183, 170, 138, 191, 106, 174 };
     private static List<Integer> insertList = new ArrayList<>(Arrays.asList(TO_INSERT));
     private static final Integer[] UNSORTED_NODUPLICATES_75_INTEGER = { 100, 7, 68, 86, 76, 40, 24, 30, 73, 52, 20, 12, 10, 49, 77, 37, 62, 83, 2, 89, 63, 56, 94, 91, 21, 9, 59, 4, 71, 93, 85, 6, 66, 36, 75, 53, 35, 67, 61, 1, 5, 84, 98, 54, 17, 70, 46, 26, 55, 69, 78, 51, 88, 39, 45, 64, 80, 48, 87, 25, 8, 96, 27, 11, 16, 14, 33, 42, 44, 28, 31, 19, 82, 43, 50 };
 
@@ -19,13 +19,12 @@ public class Test {
 
     private static Random rnd = new Random();
 
-
     public static void main(String[] args) {
         //allOperationsOnSortedNonSortedSerial();
         insertRemoveMixed();
     }
 
-    private static void allOperationsOnSortedNonSortedSerial(){
+    private static void allOperationsOnSortedNonSortedSerial() {
         RedBlackTree<Integer> rbtSorted = new RedBlackTree<>();
         RedBlackTree<Integer> rbtUnsorted = new RedBlackTree<>();
         RedBlackTree<Integer> rbtReverse = new RedBlackTree<>();
@@ -36,46 +35,48 @@ public class Test {
         SplayTree<Integer> splayTreeUnsorted = new SplayTree<>();
         SplayTree<Integer> splayTreeReverse = new SplayTree<>();
 
-
         //INSERT
         System.out.println("test insert SORTED:");
-        insertTester(SORTED_NODUPLICATE_75, splayTreeSorted,rbtSorted, treapSorted);
+        insertTester(SORTED_NODUPLICATE_75, splayTreeSorted, rbtSorted, treapSorted);
         System.out.println("test insert UNSORTED:");
         insertTester(UNSORTED_NODUPLICATES_75, splayTreeUnsorted, rbtUnsorted, treapUnsorted);
         System.out.println("test insert REVERSE");
         insertTester(REVERSE_NODUPLICATE_75, splayTreeReverse, rbtReverse, treapReverse);
 
-        //insert tests complete -> reset rotationCounter!
-        resetCounter(splayTreeSorted,rbtSorted, treapSorted, splayTreeUnsorted, rbtUnsorted, treapUnsorted, splayTreeReverse, rbtReverse, treapReverse);
 
+
+
+
+        //insert tests complete -> reset rotationCounter!
+        resetCounter(splayTreeSorted, rbtSorted, treapSorted, splayTreeUnsorted, rbtUnsorted, treapUnsorted, splayTreeReverse, rbtReverse, treapReverse);
 
         //CONTAINS
         //test number of rotations caused by contains
         //test contains sorted - interesting for splay tree
         System.out.println("test number of rotations caused by contains");
         System.out.println("sorted duplicates");
-        containsTester(SAMPLE_DUPLICATES_15, splayTreeSorted,rbtSorted, treapSorted);
+        containsTester(SAMPLE_DUPLICATES_15, splayTreeSorted, rbtSorted, treapSorted);
         System.out.println("sorted NO duplicates");
-        containsTester(SAMPLE_NO_DUPLICATES_15, splayTreeSorted,rbtSorted, treapSorted);
+        containsTester(SAMPLE_NO_DUPLICATES_15, splayTreeSorted, rbtSorted, treapSorted);
 
         //unsorted
         System.out.println("unsorted duplicates");
-        containsTester(SAMPLE_DUPLICATES_15, splayTreeUnsorted,rbtUnsorted, treapUnsorted);
+        containsTester(SAMPLE_DUPLICATES_15, splayTreeUnsorted, rbtUnsorted, treapUnsorted);
         System.out.println("unsorted NO duplicates");
-        containsTester(SAMPLE_NO_DUPLICATES_15, splayTreeUnsorted,rbtUnsorted, treapUnsorted);
+        containsTester(SAMPLE_NO_DUPLICATES_15, splayTreeUnsorted, rbtUnsorted, treapUnsorted);
 
         //reverse
         System.out.println("reverse duplicates");
-        containsTester(SAMPLE_DUPLICATES_15, splayTreeReverse,rbtReverse, treapReverse);
+        containsTester(SAMPLE_DUPLICATES_15, splayTreeReverse, rbtReverse, treapReverse);
         System.out.println("reverse NO duplicates");
-        containsTester(SAMPLE_NO_DUPLICATES_15, splayTreeReverse,rbtReverse, treapReverse);
+        containsTester(SAMPLE_NO_DUPLICATES_15, splayTreeReverse, rbtReverse, treapReverse);
 
         //contains tests complete -> reset rotationCounter!
-        resetCounter(splayTreeSorted,rbtSorted, treapSorted, splayTreeUnsorted, rbtUnsorted, treapUnsorted, splayTreeReverse, rbtReverse, treapReverse);
+        resetCounter(splayTreeSorted, rbtSorted, treapSorted, splayTreeUnsorted, rbtUnsorted, treapUnsorted, splayTreeReverse, rbtReverse, treapReverse);
 
         //REMOVE
         //testing contains changed the splay trees - make new!
-        SplayTree<Integer> splayTreeSortedTwo= new SplayTree<>();
+        SplayTree<Integer> splayTreeSortedTwo = new SplayTree<>();
         SplayTree<Integer> splayTreeUnsortedTwo = new SplayTree<>();
         SplayTree<Integer> splayTreeReverseTwo = new SplayTree<>();
 
@@ -88,7 +89,7 @@ public class Test {
         removeTester(SAMPLE_NO_DUPLICATES_15, splayTreeReverseTwo, rbtReverse, treapReverse);
     }
 
-    private static void insertRemoveMixed(){
+    private static void insertRemoveMixed() {
 
         Collections.shuffle(removeList);
 
@@ -100,7 +101,7 @@ public class Test {
         insert(splayTreeUnsorted, UNSORTED_NODUPLICATES_75);
         resetCounter(treapUnsorted, splayTreeUnsorted);
         //mixed insert and remove
-        while(insertList.size() > 5){
+        while (insertList.size() > 5) {
             insertMixed(treapUnsorted, splayTreeUnsorted);
             removeMixed(treapUnsorted, splayTreeUnsorted);
         }
@@ -109,29 +110,28 @@ public class Test {
 
     }
 
-    private static void resetCounter(DataStructure<Integer>... structs){
-        for(DataStructure<Integer> struct : structs){
+    private static void resetCounter(DataStructure<Integer>... structs) {
+        for (DataStructure<Integer> struct : structs) {
             struct.resetRotationCounter();
         }
     }
 
-    private static int remove(DataStructure<Integer> struct, Integer [] data) {
+    private static int remove(DataStructure<Integer> struct, Integer[] data) {
         for (int i : data) {
             struct.remove(i);
         }
         return struct.getRotationCounter();
     }
 
-    private static void removeTester(Integer[] data, DataStructure<Integer>... structs){
-        for(DataStructure<Integer> struct : structs) {
+    private static void removeTester(Integer[] data, DataStructure<Integer>... structs) {
+        for (DataStructure<Integer> struct : structs) {
             System.out.print(struct.getClass().getName() + ": ");
             System.out.println(remove(struct, data));
         }
     }
 
-
-    private static void insertTester(Integer[] data, DataStructure<Integer>... structs){
-        for(DataStructure<Integer> struct : structs) {
+    private static void insertTester(Integer[] data, DataStructure<Integer>... structs) {
+        for (DataStructure<Integer> struct : structs) {
             System.out.print(struct.getClass().getName() + ": ");
             System.out.println(insert(struct, data));
         }
@@ -152,61 +152,72 @@ public class Test {
     }
 
     private static void containsTester(Integer[] data, DataStructure<Integer>... structs) {
-        for(DataStructure<Integer> struct : structs) {
+        for (DataStructure<Integer> struct : structs) {
             System.out.print(struct.getClass().getName() + ": ");
             System.out.println(testContains(struct, data));
         }
     }
 
-
-    private static void removeMixed(DataStructure<Integer> ... structs) {
+    private static void removeMixed(DataStructure<Integer>... structs) {
         int randomNum = rnd.nextInt(1, 4);
         Integer arr[] = new Integer[randomNum];
-        for(int i = 0; i < randomNum; i++) {
-            arr[i] = removeList.remove(removeList.size()-1);
+        for (int i = 0; i < randomNum; i++) {
+            arr[i] = removeList.remove(removeList.size() - 1);
         }
-        for(DataStructure<Integer> struct : structs) {
+        for (DataStructure<Integer> struct : structs) {
             remove(struct, arr);
         }
     }
 
-
-
-    private static void insertMixed(DataStructure<Integer>... structs){
+    private static void insertMixed(DataStructure<Integer>... structs) {
         int rand = rnd.nextInt(1, 6);
         Integer arr[] = new Integer[rand];
         for (int i = 0; i < rand; i++) {
-            arr[i] = insertList.remove(insertList.size()-1);
+            arr[i] = insertList.remove(insertList.size() - 1);
         }
 
-        for (DataStructure<Integer> struct : structs){
+        for (DataStructure<Integer> struct : structs) {
             insert(struct, arr);
         }
 
     }
 
-
     private static void generateData() {
         int size = 75;
         int max = 100;
 
-        int[] arr = new int[size];
+        Integer[] arr = new Integer[size];
 
         for (int i = 0; i < size; i++) {
-            Random random = new Random();
-            arr[i] = random.ints(1, max).findFirst().getAsInt();
+            arr[i] = rnd.ints(1, max).findFirst().getAsInt();
         }
 
-        int[] sorted = Arrays.copyOf(arr, size);
+        Integer[] sorted = Arrays.copyOf(arr, size);
         Arrays.sort(sorted);
 
-        int[] reverse = Arrays.copyOf(arr, size);
-        Collections.reverse(Arrays.asList(reverse));
-
         //change to Integer and this will work
-        //Integer[] reverse = Arrays.copyOf(sorted, size);
-        //Arrays.sort(reverse, Collections.reverseOrder());
+        Integer[] reverse = Arrays.copyOf(sorted, size);
+        Arrays.sort(reverse, Collections.reverseOrder());
 
+    }
+
+    private static String createTable(String header, SplayTree<Integer> splay, RedBlackTree<Integer> rbt, Treap<Integer> treap) {
+        StringBuilder output = new StringBuilder();
+
+        output.append("\\begin{table}[]");
+        output.append("\\begin{tabular}{||c || c c c||}");
+        output.append(String.format("\\multicolumn{4}{|c|}{%s}\\\\", header));
+        output.append("\\hline\\hline");
+        output.append("& TDST & RBT & TREAP");
+        output.append("\\hline");
+
+        // RESULT
+
+        output.append("\\hline");
+        output.append("\\end{tabular}");
+        output.append("\\end{table}");
+
+        return output.toString();
     }
 
 }
