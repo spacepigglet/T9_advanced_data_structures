@@ -46,7 +46,7 @@ public class Test {
         insertTester(SORTED_NODUPLICATE, splayTreeSorted,rbtSorted, treapSorted);
         System.out.println("test insert UNSORTED:");
         insertTester(UNSORTED_NODUPLICATE, rbtUnsorted, treapUnsorted, splayTreeUnsorted);
-        System.out.println("test insert REVERSE");
+        //System.out.println("test insert REVERSE");
 
         insertTester(REVERSE_NODUPLICATE, rbtReverse, treapReverse, splayTreeReverse );
 
@@ -130,8 +130,8 @@ public class Test {
 
     private static void removeTester(Integer[] data, DataStructure<Integer>... structs) {
         for (DataStructure<Integer> struct : structs) {
-            System.out.print(struct.getClass().getName() + ": ");
-            System.out.println(remove(struct, data));
+            //System.out.print(struct.getClass().getName() + ": ");
+            remove(struct, data);
         }
     }
 
@@ -234,17 +234,31 @@ public class Test {
             Treap<Integer> treap) {
         StringBuilder output = new StringBuilder();
 
-        output.append("\\begin{table}[]");
-        output.append("\\begin{tabular}{||c || c c c||}");
-        output.append(String.format("\\multicolumn{4}{|c|}{%s}\\\\", header));
-        output.append("\\hline\\hline");
-        output.append("& TDST & RBT & TREAP");
-        output.append("\\hline");
+        output.append("\\begin{table}[h!]\n");
+        output.append("\\begin{tabular}{|c | c c c |}\n\\hline");
+        output.append(String.format("\\multicolumn{4}{|c|}{%s}\\\\\n", header));
+        output.append("\\hline\\hline\n");
+        output.append(" & RBT & TREAP & TDST \\\\ \\hline\n");
+
+        output.append("Sorted ");
+        for (DataStructure<Integer> ds : sortedStructs){
+            output.append("&").append(ds.getRotationCounter());
+        }
+        output.append("\\\\ \\hline\n");
+        output.append("Unsorted ");
+        for (DataStructure<Integer> ds : unsortedStructs){
+            output.append("&").append(ds.getRotationCounter());
+        }
+        output.append("\\\\ \\hline\n");
+        output.append("Reverse ");
+        for (DataStructure<Integer> ds : reverseStructs){
+            output.append("&").append(ds.getRotationCounter());
+        }
 
         // RESULT
 
-        output.append("\\hline");
-        output.append("\\end{tabular}");
+        output.append("\\\\ \\hline\n");
+        output.append("\\end{tabular}\n");
         output.append("\\end{table}");
 
         return output.toString();
