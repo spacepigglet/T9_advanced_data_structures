@@ -5,6 +5,7 @@ public class Test {
     private static Integer[] SORTED_NODUPLICATE;
     private static Integer[] REVERSE_NODUPLICATE;
 
+
     // Testdata for contains
     private static Integer[] SAMPLE_DUPLICATES; // Gonna be good for splay
     private static Integer[] SAMPLE_NO_DUPLICATES;
@@ -13,7 +14,6 @@ public class Test {
     private static List<Integer> insertList ;
     private static List<Integer> removeList;
     private static final Random rnd = new Random();
-
 
     public static void main(String[] args) {
         generateData();
@@ -39,11 +39,14 @@ public class Test {
         System.out.println("test insert UNSORTED:");
         insertTester(UNSORTED_NODUPLICATE, splayTreeUnsorted, rbtUnsorted, treapUnsorted);
         System.out.println("test insert REVERSE");
+
         insertTester(REVERSE_NODUPLICATE, splayTreeReverse, rbtReverse, treapReverse);
 
         //createTable("Insert stor mängd data i rad")
+
         //insert tests complete -> reset rotationCounter!
-        resetCounter(splayTreeSorted, rbtSorted, treapSorted, splayTreeUnsorted, rbtUnsorted, treapUnsorted, splayTreeReverse, rbtReverse, treapReverse);
+        resetCounter(splayTreeSorted, rbtSorted, treapSorted, splayTreeUnsorted, rbtUnsorted, treapUnsorted,
+                splayTreeReverse, rbtReverse, treapReverse);
 
         //CONTAINS
         //test number of rotations caused by contains
@@ -68,7 +71,8 @@ public class Test {
         containsTester(SAMPLE_NO_DUPLICATES, splayTreeReverse,rbtReverse, treapReverse);
 
         //contains tests complete -> reset rotationCounter!
-        resetCounter(splayTreeSorted, rbtSorted, treapSorted, splayTreeUnsorted, rbtUnsorted, treapUnsorted, splayTreeReverse, rbtReverse, treapReverse);
+        resetCounter(splayTreeSorted, rbtSorted, treapSorted, splayTreeUnsorted, rbtUnsorted, treapUnsorted,
+                splayTreeReverse, rbtReverse, treapReverse);
 
         //REMOVE
         //testing contains changed the splay trees - make new!
@@ -99,7 +103,8 @@ public class Test {
             insertMixed(treapUnsorted, splayTreeUnsorted);
             removeMixed(treapUnsorted, splayTreeUnsorted);
         }
-        System.out.println("treap rotations: " + treapUnsorted.getRotationCounter() + "\nsplay rotations: " + splayTreeUnsorted.getRotationCounter());
+        System.out.println("treap rotations: " + treapUnsorted.getRotationCounter() + "\nsplay rotations: "
+                + splayTreeUnsorted.getRotationCounter());
         System.out.println(insertList);
 
     }
@@ -219,7 +224,8 @@ public class Test {
         SAMPLE_DUPLICATES = duplicates.toArray(new Integer[duplicates.size()]);
     }
 
-    private static String createTable(String header, SplayTree<Integer> splay, RedBlackTree<Integer> rbt, Treap<Integer> treap) {
+    private static String createTable(String header, SplayTree<Integer> splay, RedBlackTree<Integer> rbt,
+            Treap<Integer> treap) {
         StringBuilder output = new StringBuilder();
 
         output.append("\\begin{table}[]");
