@@ -6,4 +6,5 @@ public interface DataStructure<T> {
 	public void resetRotationCounter();
 
 	public void insert(T i);
+	public void remove(T i);
 }

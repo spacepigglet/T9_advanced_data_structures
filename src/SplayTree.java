@@ -31,8 +31,13 @@ public class SplayTree<AnyType extends Comparable<? super AnyType>> implements D
 		root = nullNode;
 	}
 
+	@Override
 	public int getRotationCounter() {
 		return rotationCounter;
+	}
+	@Override
+	public void resetRotationCounter() {
+		rotationCounter = 0;
 	}
 
 	private BinaryNode<AnyType> newNode = null; // Used between different inserts
@@ -259,10 +264,7 @@ public class SplayTree<AnyType extends Comparable<? super AnyType>> implements D
 		BinaryNode<AnyType> right; // Right child
 	}
 
-	@Override
-	public void resetRotationCounter() {
-		rotationCounter = 0;
-	}
+
 
 	private BinaryNode<AnyType> root;
 	private BinaryNode<AnyType> nullNode;

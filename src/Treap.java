@@ -41,6 +41,11 @@ public class Treap<AnyType extends Comparable<? super AnyType>> implements DataS
         //throw new UnsupportedOperationException("Unimplemented method 'getRotationCounter'");
     }
 
+    @Override
+    public void resetRotationCounter() {
+        rotationCounter = 0;
+    }
+
     /**
      * Insert into the tree. Does nothing if x is already present.
      * @param x the item to insert.
@@ -223,11 +228,6 @@ public class Treap<AnyType extends Comparable<? super AnyType>> implements DataS
         k1.right = k2.left;
         k2.left = k1;
         return k2;
-    }
-
-    @Override
-    public void resetRotationCounter() {
-        rotationCounter = 0;
     }
 
     private static class TreapNode<AnyType> {
