@@ -1,6 +1,23 @@
 import java.util.*;
 
 public class Test {
+    private static RedBlackTree<Integer> rbtSorted;
+    private static RedBlackTree<Integer> rbtUnsorted;
+    private static RedBlackTree<Integer> rbtReverse;
+    private static Treap<Integer> treapSorted;
+
+    private static Treap<Integer> treapUnsorted;
+    private static Treap<Integer> treapReverse;
+    private static SplayTree<Integer> splayTreeSorted;
+    private static SplayTree<Integer> splayTreeUnsorted;
+    private static SplayTree<Integer> splayTreeReverse;
+
+    private static final List<DataStructure<Integer>> structs = new ArrayList<>();
+
+    /*private static final List<DataStructure<Integer>> unsortedStructs = new ArrayList<>();
+    private static final List<DataStructure<Integer>> sortedStructs = new ArrayList<>();
+    private static final List<DataStructure<Integer>> reverseStructs = new ArrayList<>();*/
+
     private static Integer[] UNSORTED_NODUPLICATE;
     private static Integer[] SORTED_NODUPLICATE;
     private static Integer[] REVERSE_NODUPLICATE;
@@ -23,30 +40,20 @@ public class Test {
     }
 
     private static void allOperationsOnSortedNonSortedSerial() {
-        RedBlackTree<Integer> rbtSorted = new RedBlackTree<>();
-        RedBlackTree<Integer> rbtUnsorted = new RedBlackTree<>();
-        RedBlackTree<Integer> rbtReverse = new RedBlackTree<>();
-        Treap<Integer> treapSorted = new Treap<>();
-        Treap<Integer> treapUnsorted = new Treap<>();
-        Treap<Integer> treapReverse = new Treap<>();
-        SplayTree<Integer> splayTreeSorted = new SplayTree<>();
-        SplayTree<Integer> splayTreeUnsorted = new SplayTree<>();
-        SplayTree<Integer> splayTreeReverse = new SplayTree<>();
-
+        initStructs();
         //INSERT
         System.out.println("test insert SORTED:");
         insertTester(SORTED_NODUPLICATE, splayTreeSorted,rbtSorted, treapSorted);
         System.out.println("test insert UNSORTED:");
-        insertTester(UNSORTED_NODUPLICATE, splayTreeUnsorted, rbtUnsorted, treapUnsorted);
+        insertTester(UNSORTED_NODUPLICATE, rbtUnsorted, treapUnsorted, splayTreeUnsorted);
         System.out.println("test insert REVERSE");
 
-        insertTester(REVERSE_NODUPLICATE, splayTreeReverse, rbtReverse, treapReverse);
+        insertTester(REVERSE_NODUPLICATE, rbtReverse, treapReverse, splayTreeReverse );
 
         //createTable("Insert stor mängd data i rad")
 
         //insert tests complete -> reset rotationCounter!
-        resetCounter(splayTreeSorted, rbtSorted, treapSorted, splayTreeUnsorted, rbtUnsorted, treapUnsorted,
-                splayTreeReverse, rbtReverse, treapReverse);
+        resetCounter();
 
         //CONTAINS
         //test number of rotations caused by contains
@@ -71,8 +78,7 @@ public class Test {
         containsTester(SAMPLE_NO_DUPLICATES, splayTreeReverse,rbtReverse, treapReverse);
 
         //contains tests complete -> reset rotationCounter!
-        resetCounter(splayTreeSorted, rbtSorted, treapSorted, splayTreeUnsorted, rbtUnsorted, treapUnsorted,
-                splayTreeReverse, rbtReverse, treapReverse);
+        resetCounter();
 
         //REMOVE
         //testing contains changed the splay trees - make new!
