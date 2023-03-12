@@ -40,7 +40,7 @@ public class RedBlackTree<AnyType extends Comparable<? super AnyType>> implement
 
     @Override
     public void resetCounter() {
-        counter =0;
+        counter = 0;
     }
 
     /**

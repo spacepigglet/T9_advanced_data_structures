@@ -1,4 +1,3 @@
-import javax.xml.crypto.Data;
 import java.util.*;
 
 public class Test {
@@ -17,8 +16,10 @@ public class Test {
     private static Integer[] REVERSE_NODUPLICATE = {15,11,9,8,7,5,4,3,2,1};
 
     // Testdata for contains
-    private static Integer[] SAMPLE_DUPLICATES = {8,11,8,11,5,3,5}; // Gonna be good for splay
+    private static Integer[] SAMPLE_2_DUPLICATES = {8,8, 5, 8, 5}; // Gonna be good for splay
     private static Integer[] SAMPLE_NO_DUPLICATES = {2,8,3,11,5,4};
+
+    private static Integer[] SAMPLE_8_DUPLICATES = {8,8,8,8,8,8};
 
     //Test data for mixed insert remove
     private static List<Integer> insertList;
@@ -27,7 +28,7 @@ public class Test {
 
     public static void main(String[] args) {
         //generateData();
-        //generateContainsData();
+       // generateContainsData();
         insertList = new ArrayList<>();
         insertList.add(12);
         insertList.add(10);
@@ -39,7 +40,7 @@ public class Test {
         removeList.add(8);
         removeList.add(3);
 
-        allOperationsOnSortedNonSortedSerial();
+        insertAndRemoveSortedNonSortedSerial();
         insertRemoveMixed();
     }
 
@@ -56,7 +57,7 @@ public class Test {
 
     }
 
-    private static void allOperationsOnSortedNonSortedSerial() {
+    private static void insertAndRemoveSortedNonSortedSerial() {
         initStructs();
         //INSERT
         insertTester(UNSORTED_NODUPLICATE, rbtUnsorted, treapUnsorted, splayTreeUnsorted);
@@ -70,20 +71,22 @@ public class Test {
         //CONTAINS
         //test number of rotations caused by contains
         //test contains sorted - interesting for splay tree
-        containsTester(SAMPLE_DUPLICATES, rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
 
 
-        System.out.println(createTable("Testa Contains med duplicates", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse));
+       //No duplicates
+        containsTester(SAMPLE_NO_DUPLICATES, rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
+        System.out.println(createTable("Testa Contains utan duplicates", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse));
         resetSplayTrees();
         resetCounter(rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
 
-        //unsorted
-        containsTester(SAMPLE_NO_DUPLICATES, rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
+        //2 Duplicates
+        containsTester(SAMPLE_2_DUPLICATES, rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
+        System.out.println(createTable("Testa Contains med 2 duplicates", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse));
+        resetSplayTrees();
+        resetCounter(rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
 
-        System.out.println(createTable("Testa Contains utan duplicates", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse));
-
-        //contains tests complete -> reset rotationCounter! it is done in resetSplayTrees()
-        //testing contains changed the splay trees - make new!
+        containsTester(SAMPLE_8_DUPLICATES, rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
+        System.out.println(createTable("Testa Contains med 8 duplicates", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse));
         resetSplayTrees();
         resetCounter(rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
 
@@ -201,7 +204,7 @@ public class Test {
     }
 
     private static void generateData() {
-        int size = 2000;
+        int size = 2048;
         List<Integer> numbers = new ArrayList<>();
 
         for (int i = 0; i < size; i++) {
@@ -224,23 +227,36 @@ public class Test {
         removeList = new ArrayList<>(Arrays.asList(UNSORTED_NODUPLICATE));
         Collections.shuffle(removeList);
 
+        generateContainsData(size/2);
+
     }
 
-    private static void generateContainsData() {
+    private static void generateContainsData(int maxSize) {
 
-        int size = 100;
+        int size = 128;
+        assert (size <= maxSize);
 
         List<Integer> shuffled= new ArrayList<>(List.of(UNSORTED_NODUPLICATE));
         Collections.shuffle(shuffled);
-        shuffled = shuffled.subList(0, size/2);
+        shuffled = shuffled.subList(0, size);
+
+        List<Integer> subTwoDup = shuffled.subList(0, size/2);
+
+        List<Integer> subEightDup = shuffled.subList(0, size/8);
 
         SAMPLE_NO_DUPLICATES = shuffled.toArray(new Integer[shuffled.size()]);
 
-        List<Integer> duplicates = shuffled.subList(0, shuffled.size()/2);
-        duplicates.addAll(duplicates);
-        Collections.shuffle(duplicates);
+        List<Integer> twoDuplicates = subTwoDup.subList(0, shuffled.size()/2);
+        twoDuplicates.addAll(twoDuplicates);
+        Collections.shuffle(twoDuplicates); //prevents ex 123123
+        SAMPLE_2_DUPLICATES = twoDuplicates.toArray(new Integer[twoDuplicates.size()]);
 
-        SAMPLE_DUPLICATES = duplicates.toArray(new Integer[duplicates.size()]);
+        List<Integer> eightDuplicates = subTwoDup.subList(0, shuffled.size()/8);
+        eightDuplicates.addAll(eightDuplicates);
+        eightDuplicates.addAll(eightDuplicates);
+        eightDuplicates.addAll(eightDuplicates);
+        SAMPLE_8_DUPLICATES = eightDuplicates.toArray(new Integer[eightDuplicates.size()]);
+
     }
 
     private static String createTable(String header, DataStructure<Integer>... structs) {
@@ -276,6 +292,6 @@ public class Test {
 
         return output.toString();
     }
-    
+
 
 }
