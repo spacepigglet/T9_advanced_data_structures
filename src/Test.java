@@ -1,4 +1,3 @@
-import javax.xml.crypto.Data;
 import java.util.*;
 
 public class Test {
@@ -141,19 +140,6 @@ public class Test {
         }
     }
 
-    private static void remove(DataStructure<Integer> struct, Integer[] data) {
-        for (int i : data) {
-            struct.remove(i);
-        }
-    }
-
-    private static void removeTester(Integer[] data, DataStructure<Integer>... structs) {
-        for (DataStructure<Integer> struct : structs) {
-            //System.out.print(struct.getClass().getName() + ": ");
-            remove(struct, data);
-        }
-    }
-
     private static void insertTester(Integer[] data, DataStructure<Integer>... structs) {
         for (DataStructure<Integer> struct : structs) {
             //System.out.print(struct.getClass().getName() + ": ");
@@ -161,35 +147,29 @@ public class Test {
         }
     }
 
-    public static int insert(DataStructure<Integer> struct, Integer... ints) {
-        for (int i : ints) {
-            struct.insert(i);
+    private static void removeTester(Integer[] data, DataStructure<Integer>... structs) {
+        for (DataStructure<Integer> struct : structs) {
+            remove(struct, data);
         }
-        return struct.getCounter();
-    }
-
-    private static int testContains(DataStructure<Integer> struct, Integer... testData) {
-        for (int i : testData) {
-            struct.contains(i);
-        }
-        return struct.getCounter();
     }
 
     private static void containsTester(Integer[] data, DataStructure<Integer>... structs) {
         for (DataStructure<Integer> struct : structs) {
-            //System.out.print(struct.getClass().getName() + ": ");
-            testContains(struct, data);
+            for (int i : data) {
+                struct.contains(i);
+            }
         }
     }
 
-    private static void removeMixed(DataStructure<Integer>... structs) {
-        int randomNum = rnd.nextInt(1, 4);
-        Integer arr[] = new Integer[randomNum];
-        for (int i = 0; i < randomNum; i++) {
-            arr[i] = removeList.remove(removeList.size() - 1);
+    private static void insert(DataStructure<Integer> struct, Integer[] ints) {
+        for (int i : ints) {
+            struct.insert(i);
         }
-        for (DataStructure<Integer> struct : structs) {
-            remove(struct, arr);
+    }
+
+    private static void remove(DataStructure<Integer> struct, Integer[] data) {
+        for (int i : data) {
+            struct.remove(i);
         }
     }
 
@@ -204,6 +184,17 @@ public class Test {
             insert(struct, arr);
         }
 
+    }
+
+    private static void removeMixed(DataStructure<Integer>... structs) {
+        int randomNum = rnd.nextInt(1, 4);
+        Integer[] arr = new Integer[randomNum];
+        for (int i = 0; i < randomNum; i++) {
+            arr[i] = removeList.remove(removeList.size() - 1);
+        }
+        for (DataStructure<Integer> struct : structs) {
+            remove(struct, arr);
+        }
     }
 
     private static void generateData() {
@@ -278,6 +269,6 @@ public class Test {
 
         return output.toString();
     }
-    
+
 
 }
