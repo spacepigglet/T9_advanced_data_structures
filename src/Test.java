@@ -20,8 +20,8 @@ public class Test {
     private static Integer[] UNSORTED_CONTAINS_DATA = {3,7,5,11,4,15,1,2,9,22};
     //sorted = {1,2,3,4,5,7,8,9,11,15};
     // reverse = {15,11,9,8,7,5,4,3,2,1}
-    private static Integer[] SAMPLE_DUPLICATES = {22}; // Gonna be good for splay
-    private static Integer[] SAMPLE_NO_DUPLICATES = {2,8,3,11,5,4,7,15,9,1};
+    private static Integer[] SAMPLE_DUPLICATES = {22,22,22,22,22,22,22,22,22,22}; // Gonna be good for splay
+    private static Integer[] SAMPLE_NO_DUPLICATES = {2,22,3,11,5,4,7,15,9,1};
 
     //Test data for mixed insert remove
     private static List<Integer> insertList;
