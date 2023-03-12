@@ -23,7 +23,7 @@ import java.util.Random;
  */
 @SuppressWarnings("all")
 public class Treap<AnyType extends Comparable<? super AnyType>> implements DataStructure<AnyType> {
-    private int rotationCounter;
+    private int counter;
     /**
      * Construct the treap.
      */
@@ -35,15 +35,13 @@ public class Treap<AnyType extends Comparable<? super AnyType>> implements DataS
     }
 
     @Override
-    public int getRotationCounter() {
-        return rotationCounter;
-        // TODO Auto-generated method stub
-        //throw new UnsupportedOperationException("Unimplemented method 'getRotationCounter'");
+    public int getCounter() {
+        return counter;
     }
 
     @Override
-    public void resetRotationCounter() {
-        rotationCounter = 0;
+    public void resetCounter() {
+        counter = 0;
     }
 
     /**
@@ -105,6 +103,7 @@ public class Treap<AnyType extends Comparable<? super AnyType>> implements DataS
 
         for (;;) {
             int compareResult = x.compareTo(current.element);
+            counter++;
 
             if (compareResult < 0)
                 current = current.left;
@@ -151,6 +150,7 @@ public class Treap<AnyType extends Comparable<? super AnyType>> implements DataS
             return new TreapNode<>(x, nullNode, nullNode);
 
         int compareResult = x.compareTo(t.element);
+        counter++;
 
         if (compareResult < 0) {
             t.left = insert(x, t.left);
@@ -175,6 +175,7 @@ public class Treap<AnyType extends Comparable<? super AnyType>> implements DataS
     private TreapNode<AnyType> remove(AnyType x, TreapNode<AnyType> t) {
         if (t != nullNode) {
             int compareResult = x.compareTo(t.element);
+            counter++;
 
             if (compareResult < 0)
                 t.left = remove(x, t.left);
@@ -212,7 +213,6 @@ public class Treap<AnyType extends Comparable<? super AnyType>> implements DataS
      * Rotate binary tree node with left child.
      */
     private TreapNode<AnyType> rotateWithLeftChild(TreapNode<AnyType> k2) {
-        rotationCounter++;
         TreapNode<AnyType> k1 = k2.left;
         k2.left = k1.right;
         k1.right = k2;
@@ -223,7 +223,6 @@ public class Treap<AnyType extends Comparable<? super AnyType>> implements DataS
      * Rotate binary tree node with right child.
      */
     private TreapNode<AnyType> rotateWithRightChild(TreapNode<AnyType> k1) {
-        rotationCounter++;
         TreapNode<AnyType> k2 = k1.right;
         k1.right = k2.left;
         k2.left = k1;

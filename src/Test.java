@@ -14,10 +14,6 @@ public class Test {
 
     private static final List<DataStructure<Integer>> structs = new ArrayList<>();
 
-    private static final List<DataStructure<Integer>> unsortedStructs = new ArrayList<>();
-    private static final List<DataStructure<Integer>> sortedStructs = new ArrayList<>();
-    private static final List<DataStructure<Integer>> reverseStructs = new ArrayList<>();
-
     private static Integer[] UNSORTED_NODUPLICATE;
     private static Integer[] SORTED_NODUPLICATE;
     private static Integer[] REVERSE_NODUPLICATE;
@@ -33,10 +29,6 @@ public class Test {
     private static final Random rnd = new Random();
 
     public static void main(String[] args) {
-
-        for(DataStructure<Integer> ds : structs){
-            System.out.println();
-        }
         generateData();
         generateContainsData();
         allOperationsOnSortedNonSortedSerial();
@@ -54,67 +46,44 @@ public class Test {
         splayTreeUnsorted = new SplayTree<>();
         splayTreeReverse = new SplayTree<>();
 
-        sortedStructs.add(rbtSorted);
-        unsortedStructs.add(rbtUnsorted);
-        reverseStructs.add(rbtReverse);
-        sortedStructs.add(treapSorted);
-        unsortedStructs.add(treapUnsorted);
-        reverseStructs.add(treapReverse);
-        sortedStructs.add(splayTreeSorted);
-        unsortedStructs.add(splayTreeUnsorted);
-        reverseStructs.add(splayTreeReverse);
-
         structs.add(rbtSorted);
-        structs.add(rbtUnsorted);
-        structs.add(rbtReverse);
         structs.add(treapSorted);
-        structs.add(treapUnsorted);
-        structs.add(treapReverse);
         structs.add(splayTreeSorted);
+        structs.add(rbtUnsorted);
+        structs.add(treapUnsorted);
         structs.add(splayTreeUnsorted);
+        structs.add(rbtReverse);
+        structs.add(treapReverse);
         structs.add(splayTreeReverse);
     }
 
     private static void allOperationsOnSortedNonSortedSerial() {
         initStructs();
         //INSERT
-        //System.out.println("test insert SORTED:");
         insertTester(SORTED_NODUPLICATE, rbtSorted, treapSorted, splayTreeSorted);
-        //System.out.println("test insert UNSORTED:");
         insertTester(UNSORTED_NODUPLICATE, rbtUnsorted, treapUnsorted, splayTreeUnsorted);
-        //System.out.println("test insert REVERSE");
-
         insertTester(REVERSE_NODUPLICATE, rbtReverse, treapReverse, splayTreeReverse );
 
         System.out.println(createTable("Insert stor mängd data i rad"));
 
-        //insert tests complete -> reset rotationCounter!
         resetCounter();
 
         //CONTAINS
         //test number of rotations caused by contains
         //test contains sorted - interesting for splay tree
-      //  System.out.println("test number of rotations caused by contains");
-       // System.out.println("sorted duplicates");
-
         containsTester(SAMPLE_DUPLICATES, splayTreeSorted,rbtSorted, treapSorted);
-       // System.out.println("sorted NO duplicates");
         containsTester(SAMPLE_NO_DUPLICATES, splayTreeSorted,rbtSorted, treapSorted);
 
-
         //unsorted
-        //System.out.println("unsorted duplicates");
         containsTester(SAMPLE_DUPLICATES, splayTreeUnsorted,rbtUnsorted, treapUnsorted);
-        //System.out.println("unsorted NO duplicates");
         containsTester(SAMPLE_NO_DUPLICATES, splayTreeUnsorted,rbtUnsorted, treapUnsorted);
 
         //reverse
-        //System.out.println("reverse duplicates");
         containsTester(SAMPLE_DUPLICATES, splayTreeReverse,rbtReverse, treapReverse);
-        //System.out.println("reverse NO duplicates");
         containsTester(SAMPLE_NO_DUPLICATES, splayTreeReverse,rbtReverse, treapReverse);
 
         System.out.println(createTable("Testa Contains"));
+
         //contains tests complete -> reset rotationCounter!
         resetCounter();
 
@@ -123,14 +92,15 @@ public class Test {
         splayTreeSorted = new SplayTree<>();
         splayTreeUnsorted = new SplayTree<>();
         splayTreeReverse = new SplayTree<>();
-        List<DataStructure<Integer>> structToRemove = new ArrayList<>();
+        insert(splayTreeSorted, SORTED_NODUPLICATE);
+        insert(splayTreeUnsorted, UNSORTED_NODUPLICATE);
+        insert(splayTreeReverse, REVERSE_NODUPLICATE);
+        resetCounter();
 
         //sorted
         //System.out.println("Test removal on SORTED");
         removeTester(SAMPLE_NO_DUPLICATES, splayTreeSorted, treapSorted);
-        //System.out.println("Test removal on UNSORTED");
         removeTester(SAMPLE_NO_DUPLICATES, splayTreeUnsorted, treapUnsorted);
-        //System.out.println("Test removal on REVERSE SORTED");
         removeTester(SAMPLE_NO_DUPLICATES, splayTreeReverse, treapReverse);
 
         System.out.println(createTable("Testa Remove"));
@@ -150,23 +120,23 @@ public class Test {
             insertMixed(treapUnsorted, splayTreeUnsorted);
             removeMixed(treapUnsorted, splayTreeUnsorted);
         }
-        System.out.println("treap rotations: " + treapUnsorted.getRotationCounter() + "\nsplay rotations: "
-                + splayTreeUnsorted.getRotationCounter());
+
+        System.out.println("treap rotations: " + treapUnsorted.getCounter() + "\nsplay rotations: "
+                + splayTreeUnsorted.getCounter());
         System.out.println(insertList);
 
     }
 
     private static void resetCounter() {
         for (DataStructure<Integer> struct : structs) {
-            struct.resetRotationCounter();
+            struct.resetCounter();
         }
     }
 
-    private static int remove(DataStructure<Integer> struct, Integer[] data) {
+    private static void remove(DataStructure<Integer> struct, Integer[] data) {
         for (int i : data) {
             struct.remove(i);
         }
-        return struct.getRotationCounter();
     }
 
     private static void removeTester(Integer[] data, DataStructure<Integer>... structs) {
@@ -187,14 +157,14 @@ public class Test {
         for (int i : ints) {
             struct.insert(i);
         }
-        return struct.getRotationCounter();
+        return struct.getCounter();
     }
 
     private static int testContains(DataStructure<Integer> struct, Integer... testData) {
         for (int i : testData) {
             struct.contains(i);
         }
-        return struct.getRotationCounter();
+        return struct.getCounter();
     }
 
     private static void containsTester(Integer[] data, DataStructure<Integer>... structs) {
@@ -278,21 +248,24 @@ public class Test {
         output.append("\\begin{tabular}{|c | c c c |}\n\\hline");
         output.append(String.format("\\multicolumn{4}{|c|}{%s}\\\\\n", header));
         output.append("\\hline\\hline\n");
-        output.append(" & RBT & TREAP & TDST \\\\ \\hline\n");
+        output.append(" & RBT & TREAP & TDST");
 
-        output.append("Sorted ");
-        for (DataStructure<Integer> ds : sortedStructs){
-            output.append("&").append(ds.getRotationCounter());
-        }
-        output.append("\\\\ \\hline\n");
-        output.append("Unsorted ");
-        for (DataStructure<Integer> ds : unsortedStructs){
-            output.append("&").append(ds.getRotationCounter());
-        }
-        output.append("\\\\ \\hline\n");
-        output.append("Reverse ");
-        for (DataStructure<Integer> ds : reverseStructs){
-            output.append("&").append(ds.getRotationCounter());
+        String[] labels = {"Sorted", "Unsorted", "Reverse"};
+        int l = 0;
+        for (int i = 0; i < structs.size(); i++) {
+            if (i%3==0) {
+                output.append("\\\\ \\hline\n");
+                output.append(labels[l]);
+                l++;
+            }
+            output.append("&");
+
+            DataStructure<Integer> curr = structs.get(i);
+            if (curr.getClass().getName().equals("RedBlackTree") && header.contains("Remove")){
+                output.append("-");
+            } else {
+                output.append(curr.getCounter());
+            }
         }
 
         // RESULT

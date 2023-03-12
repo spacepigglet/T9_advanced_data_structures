@@ -20,7 +20,7 @@
  */
 @SuppressWarnings("all")
 public class SplayTree<AnyType extends Comparable<? super AnyType>> implements DataStructure<AnyType> {
-	private int rotationCounter;
+	private int counter;
 
 	/**
 	 * Construct the tree.
@@ -32,12 +32,12 @@ public class SplayTree<AnyType extends Comparable<? super AnyType>> implements D
 	}
 
 	@Override
-	public int getRotationCounter() {
-		return rotationCounter;
+	public int getCounter() {
+		return counter;
 	}
 	@Override
-	public void resetRotationCounter() {
-		rotationCounter = 0;
+	public void resetCounter() {
+		counter = 0;
 	}
 
 	private BinaryNode<AnyType> newNode = null; // Used between different inserts
@@ -58,6 +58,7 @@ public class SplayTree<AnyType extends Comparable<? super AnyType>> implements D
 			root = splay(x, root);
 
 			int compareResult = x.compareTo(root.element);
+			counter++;
 
 			if (compareResult < 0) {
 				newNode.left = root.left;
@@ -151,6 +152,7 @@ public class SplayTree<AnyType extends Comparable<? super AnyType>> implements D
 
 		root = splay(x, root);
 
+		counter++;
 		return root.element.compareTo(x) == 0;
 	}
 
@@ -188,11 +190,12 @@ public class SplayTree<AnyType extends Comparable<? super AnyType>> implements D
 
 		for (;;) {
 			int compareResult = x.compareTo(t.element);
+			counter++;
 
 			if (compareResult < 0) {
+				counter++;
 				if (x.compareTo(t.left.element) < 0) {
 					t = rotateWithLeftChild(t);
-					rotationCounter++;
 				}
 
 				if (t.left == nullNode)
@@ -202,9 +205,9 @@ public class SplayTree<AnyType extends Comparable<? super AnyType>> implements D
 				rightTreeMin = t;
 				t = t.left;
 			} else if (compareResult > 0) {
+				counter++;
 				if (x.compareTo(t.right.element) > 0) {
 					t = rotateWithRightChild(t);
-					rotationCounter++;
 				}
 
 				if (t.right == nullNode)

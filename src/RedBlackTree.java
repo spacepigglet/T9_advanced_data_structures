@@ -21,7 +21,7 @@
  * @author Mark Allen Weiss
  */
 public class RedBlackTree<AnyType extends Comparable<? super AnyType>> implements DataStructure<AnyType> {
-    private int rotationCounter;
+    private int counter;
 
     /**
      * Construct the tree.
@@ -34,13 +34,13 @@ public class RedBlackTree<AnyType extends Comparable<? super AnyType>> implement
     }
 
     @Override
-    public int getRotationCounter() {
-        return rotationCounter;
+    public int getCounter() {
+        return counter;
     }
 
     @Override
-    public void resetRotationCounter() {
-        rotationCounter=0;
+    public void resetCounter() {
+        counter =0;
     }
 
     /**
@@ -50,6 +50,7 @@ public class RedBlackTree<AnyType extends Comparable<? super AnyType>> implement
      * If it is not possible for t to be header, use compareTo directly.
      */
     private int compare(AnyType item, RedBlackNode<AnyType> t) {
+        counter++;
         if (t == header)
             return 1;
         else
@@ -140,10 +141,14 @@ public class RedBlackTree<AnyType extends Comparable<? super AnyType>> implement
         current = header.right;
 
         for (;;) {
-            if (x.compareTo(current.element) < 0)
+            if (x.compareTo(current.element) < 0) {
+                counter++;
                 current = current.left;
-            else if (x.compareTo(current.element) > 0)
+            }
+            else if (x.compareTo(current.element) > 0) {
+                counter++;
                 current = current.right;
+            }
             else if (current != nullNode)
                 return true;
             else
@@ -219,7 +224,6 @@ public class RedBlackTree<AnyType extends Comparable<? super AnyType>> implement
      * @return the root of the rotated subtree.
      */
     private RedBlackNode<AnyType> rotate(AnyType item, RedBlackNode<AnyType> parent) {
-        rotationCounter++;
         if (compare(item, parent) < 0)
             return parent.left = compare(item, parent.left) < 0 ? rotateWithLeftChild(parent.left) : // LL
                     rotateWithRightChild(parent.left); // LR
