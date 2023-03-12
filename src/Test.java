@@ -63,6 +63,7 @@ public class Test {
         insertTester(SORTED_NODUPLICATE, rbtSorted, treapSorted, splayTreeSorted);
         insertTester(REVERSE_NODUPLICATE, rbtReverse, treapReverse, splayTreeReverse );
 
+        System.out.println("\\begin{table}[h!]");
         System.out.println(createTable("Insert stor mängd data i rad", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse));
 
         resetCounter(rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
@@ -74,12 +75,14 @@ public class Test {
 
 
         System.out.println(createTable("Testa Contains med duplicates", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse));
+        System.out.println("\\end{table}");
         resetSplayTrees();
         resetCounter(rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
 
         //unsorted
         containsTester(SAMPLE_NO_DUPLICATES, rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
 
+        System.out.println("\\begin{table}[h!]");
         System.out.println(createTable("Testa Contains utan duplicates", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse));
 
         //contains tests complete -> reset rotationCounter! it is done in resetSplayTrees()
@@ -93,6 +96,7 @@ public class Test {
 
 
         System.out.println(createTable("Testa Remove", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse));
+        System.out.println("\\end{table}");
     }
 
     private static void resetSplayTrees() {
@@ -121,7 +125,9 @@ public class Test {
             removeMixed(treapUnsorted, splayTreeUnsorted);
         }
 
+        System.out.println("\\begin{table}[h!]");
         System.out.println(createTable("Blandad isättning och borttag", rbtUnsorted, treapUnsorted, splayTreeUnsorted));
+        System.out.println("\\end{table}");
 
 //        System.out.println("treap rotations: " + treapUnsorted.getCounter() + "\nsplay rotations: "
 //                + splayTreeUnsorted.getCounter());
@@ -246,17 +252,16 @@ public class Test {
     private static String createTable(String header, DataStructure<Integer>... structs) {
         StringBuilder output = new StringBuilder();
 
-        output.append("\\begin{table}[h!]\n");
-        output.append("\\begin{tabular}{|c | c c c |}\n\\hline");
-        output.append(String.format("\\multicolumn{4}{|c|}{%s}\\\\\n", header));
-        output.append("\\hline\\hline\n");
-        output.append(" & RBT & TREAP & TDST");
+        output.append(String.format("\t\\begin{datatable}[%s]\n\t\t", header));
+        //output.append(String.format("\\multicolumn{4}{|c|}{%s}\\\\\n\t\t", header));
+        //output.append("\\hline\\hline\n\t\t");
+        output.append("& RBT & TREAP & TDST");
 
         String[] labels = {"Unsorted", "Sorted", "Reverse"};
         int l = 0;
         for (int i = 0; i < structs.length; i++) {
             if (i%3==0) {
-                output.append("\\\\ \\hline\n");
+                output.append("\\\\ \\hline\n\t\t");
                 output.append(labels[l]);
                 l++;
             }
@@ -269,10 +274,7 @@ public class Test {
                 output.append(curr.getCounter());
             }
         }
-
-        output.append("\\\\ \\hline\n");
-        output.append("\\end{tabular}\n");
-        output.append("\\end{table}");
+        output.append("\n\t\\end{datatable}");
 
         return output.toString();
     }
