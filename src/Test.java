@@ -134,6 +134,7 @@ public class Test {
 
     }
 
+    @SafeVarargs
     private static void resetCounter(DataStructure<Integer>... structs) {
         for (DataStructure<Integer> struct : structs) {
             struct.resetCounter();
@@ -146,6 +147,7 @@ public class Test {
         }
     }
 
+    @SafeVarargs
     private static void removeTester(Integer[] data, DataStructure<Integer>... structs) {
         for (DataStructure<Integer> struct : structs) {
             //System.out.print(struct.getClass().getName() + ": ");
@@ -153,6 +155,7 @@ public class Test {
         }
     }
 
+    @SafeVarargs
     private static void insertTester(Integer[] data, DataStructure<Integer>... structs) {
         for (DataStructure<Integer> struct : structs) {
             //System.out.print(struct.getClass().getName() + ": ");
@@ -174,6 +177,7 @@ public class Test {
         return struct.getCounter();
     }
 
+    @SafeVarargs
     private static void containsTester(Integer[] data, DataStructure<Integer>... structs) {
         for (DataStructure<Integer> struct : structs) {
             //System.out.print(struct.getClass().getName() + ": ");
@@ -181,9 +185,10 @@ public class Test {
         }
     }
 
+    @SafeVarargs
     private static void removeMixed(DataStructure<Integer>... structs) {
         int randomNum = rnd.nextInt(1, 4);
-        Integer arr[] = new Integer[randomNum];
+        Integer[] arr = new Integer[randomNum];
         for (int i = 0; i < randomNum; i++) {
             arr[i] = removeList.remove(removeList.size() - 1);
         }
@@ -192,9 +197,10 @@ public class Test {
         }
     }
 
+    @SafeVarargs
     private static void insertMixed(DataStructure<Integer>... structs) {
         int rand = rnd.nextInt(1, 6);
-        Integer arr[] = new Integer[rand];
+        Integer[] arr = new Integer[rand];
         for (int i = 0; i < rand; i++) {
             arr[i] = insertList.remove(insertList.size() - 1);
         }
@@ -233,6 +239,7 @@ public class Test {
     }
 
 
+    @SafeVarargs
     private static void createResultTable(String header, DataStructure<Integer>... structs) {
         StringBuilder output = new StringBuilder();
 
