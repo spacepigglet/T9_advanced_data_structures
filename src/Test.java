@@ -17,10 +17,10 @@ public class Test {
     private static Integer[] REVERSE_NODUPLICATE ;
 
     // Testdata for contains
-    private static Integer[] UNSORTED_CONTAINS_DATA = {7,3,5,9,8,1,4,2,15,11};
+    private static Integer[] UNSORTED_CONTAINS_DATA = {3,7,5,11,4,15,1,2,9,22};
     //sorted = {1,2,3,4,5,7,8,9,11,15};
     // reverse = {15,11,9,8,7,5,4,3,2,1}
-    private static Integer[] SAMPLE_DUPLICATES = {2,2,2,2,2,2,2,2,2,2}; // Gonna be good for splay
+    private static Integer[] SAMPLE_DUPLICATES = {22}; // Gonna be good for splay
     private static Integer[] SAMPLE_NO_DUPLICATES = {2,8,3,11,5,4,7,15,9,1};
 
     //Test data for mixed insert remove
@@ -68,16 +68,12 @@ public class Test {
         //System.out.println("Test removal on SORTED");
         removeTester(SAMPLE_NO_DUPLICATES, splayTreeUnsorted, treapUnsorted, splayTreeSorted, treapSorted, splayTreeReverse, treapReverse);
 
-        createResultTable("Testa Remove", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
+        createResultTable("Testa borttag", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
     }
 
     private static void resetSplayTrees() {
-        splayTreeSorted = new SplayTree<>();
         splayTreeUnsorted = new SplayTree<>();
-        splayTreeReverse = new SplayTree<>();
-        insert(splayTreeSorted, SORTED_NODUPLICATE);
-        insert(splayTreeUnsorted, UNSORTED_NODUPLICATE);
-        insert(splayTreeReverse, REVERSE_NODUPLICATE);
+        insert(splayTreeUnsorted, UNSORTED_CONTAINS_DATA);
         //resetCounter();
         //resetCounter(splayTreeSorted, splayTreeUnsorted, splayTreeReverse);
     }
@@ -88,16 +84,16 @@ public class Test {
         //CONTAINS
         //interesting for splay tree
         //No duplicates
-        containsTester(SAMPLE_NO_DUPLICATES, rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
-        createResultTable("Testa Contains utan duplicates", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
+        containsTester(SAMPLE_NO_DUPLICATES, rbtUnsorted, treapUnsorted, splayTreeUnsorted);
+        createResultTable("Testa Contains utan duplicates", rbtUnsorted, treapUnsorted, splayTreeUnsorted);
         resetSplayTrees();
-        resetCounter(rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
+        resetCounter(rbtUnsorted, treapUnsorted, splayTreeUnsorted);
 
         //Duplicates
-        containsTester(SAMPLE_DUPLICATES, rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
-        createResultTable("Testa Contains med duplicates", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
+        containsTester(SAMPLE_DUPLICATES, rbtUnsorted, treapUnsorted, splayTreeUnsorted);
+        createResultTable("Testa Contains med duplicates", rbtUnsorted, treapUnsorted, splayTreeUnsorted);
         resetSplayTrees();
-        resetCounter(rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
+        resetCounter(rbtUnsorted, treapUnsorted, splayTreeUnsorted);
 
     }
 
@@ -254,7 +250,7 @@ public class Test {
             output.append("&");
 
             DataStructure<Integer> curr = structs[i];
-            if (curr.getClass().getName().equals("RedBlackTree") && header.contains("Remove") || curr.getClass().getName().equals("RedBlackTree") && structs.length == 3) {
+            if (curr.getClass().getName().equals("RedBlackTree") && header.contains("borttag")) {
                 output.append("-");
             } else {
                 output.append(curr.getCounter());
