@@ -276,36 +276,6 @@ public class Test {
 
         return output.toString();
     }
-
-    public static String createTableMixed(String header, DataStructure<Integer>... structs){
-        StringBuilder output = new StringBuilder();
-
-        output.append("\\begin{table}[h!]\n");
-        output.append("\\begin{tabular}{|c | c c c |}\n\\hline");
-        output.append(String.format("\\multicolumn{4}{|c|}{%s}\\\\\n", header));
-        output.append("\\hline\\hline\n");
-        output.append(" & RBT & TREAP & TDST");
-
-        output.append("\\\\ \\hline\n");
-        output.append("Unsorted");
-
-        for (int i = 3; i < 6; i++) {
-
-            output.append("&");
-
-            DataStructure<Integer> curr = structs[i];
-            if (curr.getClass().getName().equals("RedBlackTree") ) {
-                output.append("-");
-            } else {
-                output.append(curr.getCounter());
-            }
-        }
-
-        output.append("\\\\ \\hline\n");
-        output.append("\\end{tabular}\n");
-        output.append("\\end{table}");
-
-        return output.toString();
-    }
+    
 
 }
