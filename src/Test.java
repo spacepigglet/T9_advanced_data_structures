@@ -12,8 +12,6 @@ public class Test {
     private static SplayTree<Integer> splayTreeUnsorted;
     private static SplayTree<Integer> splayTreeReverse;
 
-    //private static final List<DataStructure<Integer>> structs = new ArrayList<>();
-
     private static Integer[] UNSORTED_NODUPLICATE = {7,3,5,9,8,1,4,2,15,11};
     private static Integer[] SORTED_NODUPLICATE = {1,2,3,4,5,7,8,9,11,15};
     private static Integer[] REVERSE_NODUPLICATE = {15,11,9,8,7,5,4,3,2,1};
@@ -56,15 +54,6 @@ public class Test {
         splayTreeUnsorted = new SplayTree<>();
         splayTreeReverse = new SplayTree<>();
 
-        /*structs.add(rbtSorted);
-        structs.add(treapSorted);
-        structs.add(splayTreeSorted);
-        structs.add(rbtUnsorted);
-        structs.add(treapUnsorted);
-        structs.add(splayTreeUnsorted);
-        structs.add(rbtReverse);
-        structs.add(treapReverse);
-        structs.add(splayTreeReverse);*/
     }
 
     private static void allOperationsOnSortedNonSortedSerial() {
@@ -81,18 +70,15 @@ public class Test {
         //CONTAINS
         //test number of rotations caused by contains
         //test contains sorted - interesting for splay tree
-        containsTester(SAMPLE_DUPLICATES, splayTreeUnsorted, rbtUnsorted, treapUnsorted);
-        containsTester(SAMPLE_DUPLICATES, splayTreeSorted, rbtSorted, treapSorted);
-        containsTester(SAMPLE_DUPLICATES, splayTreeReverse, rbtReverse, treapReverse);
+        containsTester(SAMPLE_DUPLICATES, rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
+
 
         System.out.println(createTable("Testa Contains med duplicates", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse));
         resetSplayTrees();
         resetCounter(rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
 
         //unsorted
-        containsTester(SAMPLE_NO_DUPLICATES, splayTreeUnsorted, rbtUnsorted, treapUnsorted);
-        containsTester(SAMPLE_NO_DUPLICATES, splayTreeSorted, rbtSorted, treapSorted);
-        containsTester(SAMPLE_NO_DUPLICATES, splayTreeReverse, rbtReverse, treapReverse);
+        containsTester(SAMPLE_NO_DUPLICATES, rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
 
         System.out.println(createTable("Testa Contains utan duplicates", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse));
 
@@ -103,9 +89,8 @@ public class Test {
 
         //REMOVE
         //System.out.println("Test removal on SORTED");
-        removeTester(SAMPLE_NO_DUPLICATES, splayTreeUnsorted, treapUnsorted);
-        removeTester(SAMPLE_NO_DUPLICATES, splayTreeSorted, treapSorted);
-        removeTester(SAMPLE_NO_DUPLICATES, splayTreeReverse, treapReverse);
+        removeTester(SAMPLE_NO_DUPLICATES, splayTreeUnsorted, treapUnsorted, splayTreeSorted, treapSorted, splayTreeReverse, treapReverse);
+
 
         System.out.println(createTable("Testa Remove", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse));
     }
