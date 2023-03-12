@@ -54,13 +54,14 @@ public class Test {
     }
 
     private static void insertRemoveMain() {
+        String[] labels = { "Unsorted", "Sorted", "Reverse" };
         initStructs();
         //INSERT
         insertTester(UNSORTED_NODUPLICATE, rbtUnsorted, treapUnsorted, splayTreeUnsorted);
         insertTester(SORTED_NODUPLICATE, rbtSorted, treapSorted, splayTreeSorted);
         insertTester(REVERSE_NODUPLICATE, rbtReverse, treapReverse, splayTreeReverse );
 
-        createResultTable("Insert stor mängd data i rad", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
+        createResultTable("Insert stor mängd data i rad", labels, rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
 
         resetCounter(rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
 
@@ -68,7 +69,7 @@ public class Test {
         //System.out.println("Test removal on SORTED");
         removeTester(SAMPLE_NO_DUPLICATES, splayTreeUnsorted, treapUnsorted, splayTreeSorted, treapSorted, splayTreeReverse, treapReverse);
 
-        createResultTable("Testa borttag", rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
+        createResultTable("Testa borttag", labels, rbtUnsorted, treapUnsorted, splayTreeUnsorted, rbtSorted, treapSorted, splayTreeSorted, rbtReverse, treapReverse, splayTreeReverse);
     }
 
     private static void resetSplayTrees() {
@@ -78,20 +79,19 @@ public class Test {
         //resetCounter(splayTreeSorted, splayTreeUnsorted, splayTreeReverse);
     }
 
-
     private static void containsMain() {
+        Map<String, List<Integer>> results = new HashMap<>();
         initStructsContain();
+
         //CONTAINS
         //interesting for splay tree
         //No duplicates
-        containsTester(SAMPLE_NO_DUPLICATES, rbtUnsorted, treapUnsorted, splayTreeUnsorted);
-        createResultTable("Testa Contains utan duplicates", rbtUnsorted, treapUnsorted, splayTreeUnsorted);
+        results.put("Utan duplicates", containsTester(SAMPLE_NO_DUPLICATES, rbtUnsorted, treapUnsorted, splayTreeUnsorted));
         resetSplayTrees();
-        resetCounter(rbtUnsorted, treapUnsorted, splayTreeUnsorted);
 
         //Duplicates
-        containsTester(SAMPLE_DUPLICATES, rbtUnsorted, treapUnsorted, splayTreeUnsorted);
-        createResultTable("Testa Contains med duplicates", rbtUnsorted, treapUnsorted, splayTreeUnsorted);
+        results.put("Med duplicates", containsTester(SAMPLE_DUPLICATES, rbtUnsorted, treapUnsorted, splayTreeUnsorted));
+        createResultTable("Testa Contains", results);
         resetSplayTrees();
         resetCounter(rbtUnsorted, treapUnsorted, splayTreeUnsorted);
 
@@ -112,6 +112,7 @@ public class Test {
     }
 
     private static void insertRemoveMixedMain() {
+        String[] labels = { "Unsorted" };
 
         treapUnsorted = new Treap<>();
         splayTreeUnsorted = new SplayTree<>();
@@ -126,7 +127,7 @@ public class Test {
             removeMixed(treapUnsorted, splayTreeUnsorted);
         }
 
-        createResultTable("Blandad isättning och borttag", rbtUnsorted, treapUnsorted, splayTreeUnsorted);
+        createResultTable("Blandad isättning och borttag", labels, rbtUnsorted, treapUnsorted, splayTreeUnsorted);
 
 //        System.out.println("treap rotations: " + treapUnsorted.getCounter() + "\nsplay rotations: "
 //                + splayTreeUnsorted.getCounter());
@@ -170,19 +171,16 @@ public class Test {
         return struct.getCounter();
     }
 
-    private static int testContains(DataStructure<Integer> struct, Integer... testData) {
-        for (int i : testData) {
-            struct.contains(i);
-        }
-        return struct.getCounter();
-    }
-
     @SafeVarargs
-    private static void containsTester(Integer[] data, DataStructure<Integer>... structs) {
+    private static List<Integer> containsTester(Integer[] testData, DataStructure<Integer>... structs) {
+        List<Integer> result = new ArrayList<>();
         for (DataStructure<Integer> struct : structs) {
-            //System.out.print(struct.getClass().getName() + ": ");
-            testContains(struct, data);
+            for (int data : testData) {
+                struct.contains(data);
+            }
+            result.add(struct.getCounter());
         }
+        return result;
     }
 
     @SafeVarargs
@@ -240,13 +238,13 @@ public class Test {
 
 
     @SafeVarargs
-    private static void createResultTable(String header, DataStructure<Integer>... structs) {
+    private static void createResultTable(String header, String[] labels, DataStructure<Integer>... structs) {
         StringBuilder output = new StringBuilder();
 
         output.append(String.format("\t\\begin{datatable}[%s]\n\t\t", header));
         output.append("& RBT & TREAP & TDST");
 
-        String[] labels = { "Unsorted", "Sorted", "Reverse" };
+
         int l = 0;
         for (int i = 0; i < structs.length; i++) {
             if (i % 3 == 0) {
@@ -263,6 +261,25 @@ public class Test {
                 output.append(curr.getCounter());
             }
         }
+        output.append("\n\t\\end{datatable}");
+
+        resultTables.add(output.toString());
+    }
+
+
+    private static void createResultTable(String header, Map<String, List<Integer>> results) {
+        StringBuilder output = new StringBuilder();
+
+        output.append(String.format("\t\\begin{datatable}[%s]\n\t\t", header));
+        output.append("& RBT & TREAP & TDST");
+
+        results.forEach((label, result) -> {
+            output.append("\\\\ \\hline\n\t\t");
+            output.append(label);
+            for (Integer res : result) {
+                output.append("&").append(res);
+            }
+        });
         output.append("\n\t\\end{datatable}");
 
         resultTables.add(output.toString());
