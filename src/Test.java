@@ -5,7 +5,6 @@ public class Test {
     private static RedBlackTree<Integer> rbtUnsorted;
     private static RedBlackTree<Integer> rbtReverse;
     private static Treap<Integer> treapSorted;
-
     private static Treap<Integer> treapUnsorted;
     private static Treap<Integer> treapReverse;
     private static SplayTree<Integer> splayTreeSorted;
@@ -14,23 +13,34 @@ public class Test {
 
     private static final List<DataStructure<Integer>> structs = new ArrayList<>();
 
-    private static Integer[] UNSORTED_NODUPLICATE;
-    private static Integer[] SORTED_NODUPLICATE;
-    private static Integer[] REVERSE_NODUPLICATE;
+    private static Integer[] UNSORTED_NODUPLICATE = {7,3,5,9,8,1,4,2,15,11};
+    private static Integer[] SORTED_NODUPLICATE = {1,2,3,4,5,7,8,9,11,15};
+    private static Integer[] REVERSE_NODUPLICATE = {15,11,9,8,7,5,4,3,2,1};
 
 
     // Testdata for contains
-    private static Integer[] SAMPLE_DUPLICATES; // Gonna be good for splay
-    private static Integer[] SAMPLE_NO_DUPLICATES;
+    private static Integer[] SAMPLE_DUPLICATES = {8,11,8,11,5,3,5}; // Gonna be good for splay
+    private static Integer[] SAMPLE_NO_DUPLICATES = {2,8,3,11,5,4};
 
     //Test data for mixed insert remove
-    private static List<Integer> insertList ;
+    private static List<Integer> insertList;
     private static List<Integer> removeList;
     private static final Random rnd = new Random();
 
     public static void main(String[] args) {
-        generateData();
-        generateContainsData();
+        //generateData();
+        //generateContainsData();
+        insertList = new ArrayList<>();
+        insertList.add(12);
+        insertList.add(10);
+        insertList.add(20);
+
+
+        removeList = new ArrayList<>();
+        removeList.add(2);
+        removeList.add(8);
+        removeList.add(3);
+
         allOperationsOnSortedNonSortedSerial();
         insertRemoveMixed();
     }
@@ -71,24 +81,34 @@ public class Test {
         //CONTAINS
         //test number of rotations caused by contains
         //test contains sorted - interesting for splay tree
-        containsTester(SAMPLE_DUPLICATES, splayTreeSorted,rbtSorted, treapSorted);
-        containsTester(SAMPLE_NO_DUPLICATES, splayTreeSorted,rbtSorted, treapSorted);
+        containsTester(SAMPLE_DUPLICATES, splayTreeSorted, rbtSorted, treapSorted);
+        containsTester(SAMPLE_DUPLICATES, splayTreeUnsorted, rbtUnsorted, treapUnsorted);
+        containsTester(SAMPLE_DUPLICATES, splayTreeReverse, rbtReverse, treapReverse);
+
+        System.out.println(createTable("Testa Contains med duplicates"));
+        resetSplayTrees();
 
         //unsorted
-        containsTester(SAMPLE_DUPLICATES, splayTreeUnsorted,rbtUnsorted, treapUnsorted);
-        containsTester(SAMPLE_NO_DUPLICATES, splayTreeUnsorted,rbtUnsorted, treapUnsorted);
+        containsTester(SAMPLE_NO_DUPLICATES, splayTreeSorted, rbtSorted, treapSorted);
+        containsTester(SAMPLE_NO_DUPLICATES, splayTreeUnsorted, rbtUnsorted, treapUnsorted);
+        containsTester(SAMPLE_NO_DUPLICATES, splayTreeReverse, rbtReverse, treapReverse);
 
-        //reverse
-        containsTester(SAMPLE_DUPLICATES, splayTreeReverse,rbtReverse, treapReverse);
-        containsTester(SAMPLE_NO_DUPLICATES, splayTreeReverse,rbtReverse, treapReverse);
+        System.out.println(createTable("Testa Contains utan duplicates"));
 
-        System.out.println(createTable("Testa Contains"));
-
-        //contains tests complete -> reset rotationCounter!
-        resetCounter();
+        //contains tests complete -> reset rotationCounter! it is done in resetSplayTrees()
+        //testing contains changed the splay trees - make new!
+        resetSplayTrees();
 
         //REMOVE
-        //testing contains changed the splay trees - make new!
+        //System.out.println("Test removal on SORTED");
+        removeTester(SAMPLE_NO_DUPLICATES, splayTreeSorted, treapSorted);
+        removeTester(SAMPLE_NO_DUPLICATES, splayTreeUnsorted, treapUnsorted);
+        removeTester(SAMPLE_NO_DUPLICATES, splayTreeReverse, treapReverse);
+
+        System.out.println(createTable("Testa Remove"));
+    }
+
+    private static void resetSplayTrees() {
         splayTreeSorted = new SplayTree<>();
         splayTreeUnsorted = new SplayTree<>();
         splayTreeReverse = new SplayTree<>();
@@ -96,14 +116,6 @@ public class Test {
         insert(splayTreeUnsorted, UNSORTED_NODUPLICATE);
         insert(splayTreeReverse, REVERSE_NODUPLICATE);
         resetCounter();
-
-        //sorted
-        //System.out.println("Test removal on SORTED");
-        removeTester(SAMPLE_NO_DUPLICATES, splayTreeSorted, treapSorted);
-        removeTester(SAMPLE_NO_DUPLICATES, splayTreeUnsorted, treapUnsorted);
-        removeTester(SAMPLE_NO_DUPLICATES, splayTreeReverse, treapReverse);
-
-        System.out.println(createTable("Testa Remove"));
     }
 
     private static void insertRemoveMixed() {
@@ -267,8 +279,6 @@ public class Test {
                 output.append(curr.getCounter());
             }
         }
-
-        // RESULT
 
         output.append("\\\\ \\hline\n");
         output.append("\\end{tabular}\n");
